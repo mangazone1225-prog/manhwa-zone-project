@@ -12,14 +12,15 @@
             "src": "/api/(.*)",
             "dest": "index.js"
         },
-        // 2. Admin Page ကို public/admin.html မှ Serve လုပ်ရန်
+        // 2. 🟢 Admin Page ကို Root Folder မှ တိုက်ရိုက် Serve လုပ်ရန်
         {
             "src": "/admin.html",
-            "dest": "/public/admin.html"
+            "dest": "/admin.html" // Root မှာရှိသော admin.html ကို တိုက်ရိုက် Serve လုပ်ရန်
         },
         // 3. Static Assets များ (CSS, JS, Images, etc.) ကို public/ ထဲကနေ ဆွဲယူရန်
+        // ဥပမာ- styles.css လိုဟာမျိုးကို public/styles.css မှ ဆွဲယူပါမည်။
         {
-            "src": "/(.*\\.(css|js|jpg|jpeg|png|gif|svg))$",
+            "src": "/(.*\\.(css|js|jpg|jpeg|png|gif|svg|ico))$",
             "dest": "/public/$1"
         },
         // 4. Uploads များကို တိုက်ရိုက် ခေါ်နိုင်ရန်
@@ -27,10 +28,10 @@
             "src": "/uploads/(.*)",
             "dest": "/uploads/$1"
         },
-        // 5. Root URL (/) ဝင်လာလျှင် public/index.html ကို ပြသရန်
+        // 5. Root URL (/) ဝင်လာလျှင် root တွင်ရှိသော index.html ကို ပြသရန်
         {
             "src": "/",
-            "dest": "/public/index.html"
+            "dest": "/index.html"
         }
     ]
 }
