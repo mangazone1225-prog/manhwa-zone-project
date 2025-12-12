@@ -7,23 +7,27 @@
         }
     ],
     "routes": [
-        // 1. Static HTML, CSS, JS and Images (for files in /public)
-        // /admin.html, /index.html, /styles.css စတာတွေကို ချိတ်ဆက်ပေးသည်။
-        {
-            "src": "/(.*\\.(html|css|js|jpg|jpeg|png|gif|svg))$",
-            "dest": "/public/$1"
-        },
-        // 2. Uploaded Images (for files in /uploads)
-        {
-            "src": "/uploads/(.*)",
-            "dest": "/uploads/$1"
-        },
-        // 3. API Routes (Backend Server)
+        // 1. API Routes အားလုံးကို Backend Server (index.js/server.js) သို့ ပို့ရန်
         {
             "src": "/api/(.*)",
             "dest": "index.js"
         },
-        // 4. Default Route (Home Page - index.html ကို ပြသရန်)
+        // 2. Admin Page ကို public/admin.html မှ Serve လုပ်ရန်
+        {
+            "src": "/admin.html",
+            "dest": "/public/admin.html"
+        },
+        // 3. Static Assets များ (CSS, JS, Images, etc.) ကို public/ ထဲကနေ ဆွဲယူရန်
+        {
+            "src": "/(.*\\.(css|js|jpg|jpeg|png|gif|svg))$",
+            "dest": "/public/$1"
+        },
+        // 4. Uploads များကို တိုက်ရိုက် ခေါ်နိုင်ရန်
+        {
+            "src": "/uploads/(.*)",
+            "dest": "/uploads/$1"
+        },
+        // 5. Root URL (/) ဝင်လာလျှင် public/index.html ကို ပြသရန်
         {
             "src": "/",
             "dest": "/public/index.html"
