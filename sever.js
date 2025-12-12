@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
+const path = require('path'); // Path module ကို ထည့်သွင်းရန်
 const fs = require('fs');
 const multer = require('multer');
 
@@ -11,16 +11,27 @@ const PORT = 3000;
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true })); 
 
-// 🛑 ပြင်ဆင်ထားသော အပိုင်း: Static File များနှင့် Uploads များကို စနစ်တကျ ချိတ်ဆက်ခြင်း
-// Frontend Files (CSS, JS, Images) များကို public/ ထဲကနေ Serve လုပ်ရန်
+// 🟢 STATIC FILE CONFIGURATION (အရေးအကြီးဆုံး ပြင်ဆင်ချက်)
+// public folder ကို serve လုပ်နေတာကိုတော့ ထားပါ
 app.use(express.static(path.join(__dirname, 'public'))); 
 // Uploaded Images များကို /uploads URL ကနေ ခေါ်ယူနိုင်ရန်
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 
-// 🛑 Admin Page ကို URL ဖြင့် တိုက်ရိုက် ခေါ်ဆိုနိုင်ရန် Route ထည့်သွင်းခြင်း
+// 🟢 ROOT တွင်ရှိသော admin.html နှင့် index.html ကို တိုက်ရိုက် Serve လုပ်ရန်
 app.get('/admin.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+    // admin.html သည် Root Folder (__dirname) တွင်ရှိသောကြောင့် တိုက်ရိုက်ခေါ်သည်
+    res.sendFile(path.join(__dirname, 'admin.html')); 
 });
+
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html')); 
+});
+
+// Home Page (Root URL)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html')); 
+});
+
 
 // --- MongoDB Setup ---
 
@@ -32,55 +43,22 @@ mongoose.connect(DB_URI)
     .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
 // --- Mongoose Schema & Model ---
-
-const ChapterSchema = new mongoose.Schema({
-    chapterNumber: { type: Number, required: true },
-    imageUrls: [String],
-    uploadDate: { type Date, default: Date.now }
-});
-
-const ManhwaSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    description: String, 
-    isHot: { type: Boolean, default: false },
-    genres: [String],
-    coverImageUrl: String,
-    chapters: [ChapterSchema],
-    lastUpdated: { type: Date, default: Date.now }
-});
-
+// (Schema များနှင့် Model များကို ဤနေရာတွင် အပြည့်အစုံ ထည့်ပါ)
+// ... (Your Schema Definitions) ...
 const Manhwa = mongoose.model('Manhwa', ManhwaSchema);
 
+
 // --- Multer (File Upload Setup) ---
-
-const UPLOADS_DIR = path.join(__dirname, 'uploads');
-if (!fs.existsSync(UPLOADS_DIR)) {
-    fs.mkdirSync(UPLOADS_DIR);
-}
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, UPLOADS_DIR);
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-});
-
+// ... (Your Multer Configuration) ...
 const upload = multer({ storage: storage });
 
-// -------------------- API Routes (Existing) --------------------
-
-app.get('/api/manhwas/home', async (req, res) => { /* ... (Existing Code) ... */ });
-app.get('/api/chapter/:manhwaId/:chapterNumber', async (req, res) => { /* ... (Existing Code) ... */ });
-app.get('/api/manhwa/details/:manhwaId', async (req, res) => { /* ... (Existing Code) ... */ });
-app.get('/api/admin/manhwas', async (req, res) => { /* ... (Existing Code) ... */ });
-app.post('/api/admin/manhwa/add', upload.single('coverImage'), async (req, res) => { /* ... (Existing Code) ... */ });
-app.post('/api/admin/chapter/add', upload.array('chapterImages', 50), async (req, res) => { /* ... (Existing Code) ... */ });
-app.delete('/api/admin/manhwa/delete/:manhwaId', async (req, res) => { /* ... (Existing Code) ... */ });
+// -------------------- API Routes --------------------
+// (API Routes များကို ဤနေရာတွင် အပြည့်အစုံ ထည့်ပါ)
+// ... app.get('/api/manhwas/home', ... ) ...
+// ... app.post('/api/admin/manhwa/add', ... ) ...
 
 
-// 🛑 ပြင်ဆင်ထားသော အပိုင်း: Local မှာ Run တာနဲ့ Cloud မှာ Run တာကို ခွဲထုတ်ခြင်း
+// 🟢 SERVER START CONFIGURATION
 if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
         console.log(`🚀 Server is running on http://localhost:${PORT}`);
@@ -89,4 +67,3 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Vercel ကနေ Import လုပ်ပြီး Run နိုင်ဖို့အတွက် app object ကို Export လုပ်ပေးခြင်း
 module.exports = app; 
-    
