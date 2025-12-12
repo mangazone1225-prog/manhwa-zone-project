@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Manhwa Zone</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        /* Admin Panel အတွက် CSS ပုံစံ */
+        #admin-main { max-width: 800px; margin: 30px auto; padding: 20px; background-color: var(--surface-color); border-radius: 12px; }
+        .admin-form h2 { border-bottom: 2px solid var(--secondary-accent); padding-bottom: 10px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-color); }
+        .form-group input[type="text"], 
+        .form-group input[type="number"], 
+        .form-group textarea { /* ⬅️ textarea ထပ်ထည့်သည်။ */
+            width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #444; background-color: #2a2a2a; color: var(--text-color); 
+        }
+        .form-group input[type="file"] { padding: 10px 0; }
+        .form-group input[type="checkbox"] { margin-right: 10px; }
+        button[type="submit"] { background-color: var(--accent-color); color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; }
+        button[type="submit"]:hover { background-color: #c40812; }
+        #message { margin-top: 20px; padding: 10px; border-radius: 5px; font-weight: 600; }
+        .success { background-color: #28a74550; color: #28a745; }
+        .error { background-color: #dc354550; color: #dc3545; }
+        
+        /* ⬅️ NEW: Manhwa List Table အတွက် CSS ⬅️ */
+        #manhwa-list-container table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        #manhwa-list-container th, #manhwa-list-container td { padding: 10px; border: 1px solid #333; text-align: left; }
+        #manhwa-list-container th { background-color: #222; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="border-bottom: none;">Admin Dashboard</h1>
+        <a href="index.html" class="back-button" style="text-decoration: none; color: var(--secondary-accent); font-weight: 600;">← Home Page</a>
+    </header>
+
+    <main id="admin-main">
+        <div id="message" style="display: none;"></div>
+
+        <section class="admin-form">
+            <h2>၁။ Manhwa အသစ် ထည့်သွင်းခြင်း</h2>
+            <form id="add-manhwa-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="manhwa-title">ခေါင်းစဉ်:</label>
+                    <input type="text" id="manhwa-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="manhwa-genres">Categories (comma ဖြင့် ခွဲပါ):</label>
+                    <input type="text" id="manhwa-genres" name="genres" placeholder="Action, Fantasy, Romance">
+                </div>
+                <div class="form-group">
+                    <label for="manhwa-description">အကျဉ်းချုပ် ဖော်ပြချက် (Description):</label>
+                    <textarea id="manhwa-description" name="description" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="manhwa-cover">Cover ပုံ (တစ်ခုသာ):</label>
+                    <input type="file" id="manhwa-cover" name="coverImage" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="manhwa-isHot" name="isHot">
+                    <label for="manhwa-isHot" style="display: inline;">Hot Manhwa အဖြစ် သတ်မှတ်ရန်</label>
+                </div>
+                <button type="submit">Manhwa စတင်ဖန်တီးပါ</button>
+            </form>
+        </section>
+
+        <hr style="margin: 40px 0;">
+
+        <section class="admin-form">
+            <h2>၂။ Chapter အသစ် တင်ခြင်း</h2>
+            <form id="add-chapter-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="manhwa-id">Manhwa ID (Database မှရသော):</label>
+                    <input type="text" id="manhwa-id" name="manhwaId" placeholder="ဥပမာ- 654a8b7c02d1e3f4a5b6c7d8" required>
+                </div>
+                <div class="form-group">
+                    <label for="chapter-number">Chapter No:</label>
+                    <input type="number" id="chapter-number" name="chapterNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="chapter-images">Chapter ပုံများ (အများအပြား ရွေးချယ်နိုင်):</label>
+                    <input type="file" id="chapter-images" name="chapterImages" multiple accept="image/*" required>
+                </div>
+                <button type="submit">Chapter တင်ပါ</button>
+            </form>
+        </section>
+
+        <hr style="margin: 40px 0;">
+
+        <section class="admin-form">
+            <h2 style="color: #dc3545;">🚨 Manhwa ဖျက်ပစ်ခြင်း</h2>
+            <form id="delete-manhwa-form">
+                <div class="form-group">
+                    <label for="delete-manhwa-id">ဖျက်ပစ်လိုသော Manhwa ID:</label>
+                    <input type="text" id="delete-manhwa-id" name="manhwaId" placeholder="ဖျက်ပစ်မည့် ID ရှည်ကြီးကို ထည့်ပါ" required>
+                    <p style="font-size: 0.9em; color: #ff9999;">⚠️ သတိပြုရန်: ဤလုပ်ဆောင်ချက်သည် Manhwa တစ်ခုလုံးကို အပြီးအပိုင် ဖျက်ပစ်ပါမည်။</p>
+                </div>
+                <button type="submit" style="background-color: #dc3545;">Manhwa အပြီးအပိုင် ဖျက်ပစ်ပါ</button>
+            </form>
+        </section>
+
+        <hr style="margin: 40px 0;">
+
+        <section class="admin-form">
+            <h2>၄။ Manhwa စာရင်း (ID များ ကူးယူရန်)</h2>
+            <div id="manhwa-list-container">
+                <p>စာရင်းဆွဲယူနေပါသည်...</p>
+            </div>
+        </section>
+        </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "manhwazone",
+  "version": "1.0.0",
+  "description": "Manhwa Translation Website Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "manhwa",
+    "nodejs",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0",
+    "multer": "^1.4.5-lts.1",
+    "crypto": "^1.0.1"
+  }
+}

@@ -1,0 +1,55 @@
+/* Reader Specific Global Styles */
+#reader-body {
+    background-color: var(--bg-color); 
+    touch-action: pan-y; /* Pinch-to-Zoom ပိတ်ရန် */
+}
+
+#reader-header, #reader-footer {
+    background-color: var(--surface-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    z-index: 1000;
+}
+#reader-header { top: 0; }
+#reader-footer { bottom: 0; }
+
+#reader-container {
+    padding: 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* -------------------- Image Viewer (Security CSS) -------------------- */
+.manhwa-page {
+    width: 100%;
+    /* ပုံရဲ့ Aspect Ratio ကို မှန်အောင် ထိန်းရန် လိုအပ်သည် */
+    min-height: 100vh; /* ယာယီ အနိမ့်ဆုံး အမြင့် */
+    
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+    /* Security: Text/Image Selection ကို ပိတ်ရန် */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+
+    /* Security: Context Menu/Right-Click ကို CSS နဲ့ တွဲပိတ်ရန် */
+    pointer-events: auto;
+    
+    margin-bottom: 5px;
+    filter: brightness(0.99); /* Screenshot/Copy ကို ရှုပ်ထွေးစေရန် */
+}
+
+/* -------------------- Reading Modes -------------------- */
+
+#reader-body.light-mode {
+    --bg-color: #f7f7f7;
+    --surface-color: #ffffff;
+    --text-color: #333333;
+}
+

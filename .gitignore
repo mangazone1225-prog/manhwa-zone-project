@@ -1,0 +1,14 @@
+# Dependency folders: Node.js ရဲ့ Modules တွေကို လုံးဝမတင်ရပါ။
+node_modules/
+
+# Uploaded Files: ပုံတွေကို Server ပေါ်မှာ သိမ်းဆည်းဖို့အတွက်ပဲ ဖြစ်လို့ Local/Cloud မှာပဲထားပါ။
+uploads/
+
+# Environment Variables: လုံခြုံရေးအရ Database Keys များ ပါဝင်သောဖိုင်ကို မတင်ရပါ။
+.env
+.npm
+npm-debug.log
+
+# Operating System Files: OS က အလိုအလျောက်ဖန်တီးတဲ့ ဖိုင်များကို မတင်ရပါ။
+.DS_Store
+Thumbs.db

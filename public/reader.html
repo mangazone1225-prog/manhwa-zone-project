@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manhwa Reader</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">← Home</a>
+        <h1 id="chapter-title">Manhwa Reader</h1> 
+        <div class="nav-links">
+            <a href="#" id="prev-chapter" style="display:none;">← Prev</a>
+            <a href="#" id="next-chapter" style="display:none;">Next →</a>
+        </div>
+    </header>
+
+    <main id="reader-page-content">
+        <div id="manhwa-details-panel">
+            <h1 id="details-title">Loading Manhwa Details...</h1>
+            <p id="details-genres"></p> 
+            
+            <div id="details-actions">
+                <a href="#" id="read-first-btn" class="nav-controls-btn">Read First Chapter</a>
+                <a href="#" id="read-last-btn" class="nav-controls-btn">Read Last Chapter</a>
+            </div>
+
+            <hr>
+            <h2>Synopsis</h2>
+            <p id="details-description"></p>
+
+            <hr>
+            <h2>Chapter List</h2>
+            <div id="chapter-list-container">
+                <p>Chapter စာရင်း ဆွဲယူနေပါသည်...</p>
+            </div>
+            
+            <hr>
+        </div>
+        <div id="reader-container">
+            <p>Please select a chapter from the list above to start reading.</p>
+        </div>
+
+        <div class="nav-controls">
+            <a href="#" id="prev-chapter-bottom" style="display:none;">← Prev</a>
+            <a href="#" id="next-chapter-bottom" style="display:none;">Next →</a>
+        </div>
+    </main>
+    
+    <script src="reader.js"></script>
+</body>
+</html>
