@@ -242,7 +242,16 @@ app.get('/api/admin/manhwas', async (req, res) => {
 });
 
 
-// Server Start
-app.listen(PORT, () => {
-    console.log(`🚀 Server is running on http://localhost:${PORT}`);
-});
+// ... (ကုဒ်အပေါ်ပိုင်းများ မပြောင်းလဲပါ) ...
+
+// Server Start လုပ်သော အပိုင်းကို အောက်ပါအတိုင်း ပြင်ဆင်ပါ။
+
+// Local Development အတွက်သာ (Vercel မှာ ဒီဟာ အလုပ်မလုပ်ပါ)
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server is running on http://localhost:${PORT}`);
+    });
+}
+
+// Vercel ကနေ Import လုပ်ဖို့အတွက် app object ကို Export လုပ်ပေးခြင်း
+module.exports = app; 
